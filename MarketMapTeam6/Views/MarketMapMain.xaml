@@ -16,6 +16,8 @@
                    HorizontalOptions="CenterAndExpand" />
                
             <Button Text="Click me" />
+            <Button Text="No, Click me!" />
+            <Button Text="No, Me!!" />
 
         </StackLayout>
         
