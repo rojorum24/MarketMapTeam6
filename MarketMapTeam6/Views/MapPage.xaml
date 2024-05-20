@@ -8,6 +8,7 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
                 <Button Text="" />
+            <Button Text="Test button" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

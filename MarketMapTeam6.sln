@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketMapTeam6.Android", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketMapTeam6.iOS", "MarketMapTeam6.iOS\MarketMapTeam6.iOS.csproj", "{43159C47-43AE-41E8-9442-003E152D3E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketMapTeam6", "MarketMapTeam6\MarketMapTeam6.csproj", "{94595912-BB55-4368-9982-4583819CD666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketMapTeam6", "MarketMapTeam6\MarketMapTeam6.csproj", "{94595912-BB55-4368-9982-4583819CD666}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WIreframes", "WIreframes", "{73B3FB64-2F46-48AD-8B6A-6C67099FFADB}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\IT488 Software Product Development Using Agile\Unit4\Market_Map_Wireframe(5.13.24).vsdx = ..\..\IT488 Software Product Development Using Agile\Unit4\Market_Map_Wireframe(5.13.24).vsdx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
