@@ -15,6 +15,13 @@ namespace MarketMapTeam6.Views
         public ShoppingListPage()
         {
             InitializeComponent();
+            List<String> testList = new List<String>
+            {
+                "Item1",
+                "Item2",
+                "Item3"
+            };
+            //ShoppingListPage.ItemsSource
         }
     }
 }

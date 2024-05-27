@@ -3,5 +3,6 @@
     <color name="launcher_background">#11111F</color>
     <color name="colorPrimary">#44d62c</color>
     <color name="colorPrimaryDark">#39BA24</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#D4F6CE</color>
+    <color name="TextColor">@android:color/white</color>
 </resources>
