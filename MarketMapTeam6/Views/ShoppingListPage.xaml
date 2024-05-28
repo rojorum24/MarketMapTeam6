@@ -5,12 +5,15 @@
              BackgroundColor="#fffffF">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="List1">
-                <ListView.ItemTemplate>
-                    <DataTemplate></DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
+            <Label Text="Shopping List"/>
+            <CollectionView ItemsSource="{Binding StoreItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding .}"
+                        HorizontalTextAlignment="left" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
         
     </ContentPage.Content>
