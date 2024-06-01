@@ -9,7 +9,7 @@
                 HorizontalOptions="CenterAndExpand" />
             
             <Entry Placeholder="Enter Zip Code" />
-
+            <Button Text="Make Your Shoppinig List" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
