@@ -4,18 +4,211 @@
              x:Class="MarketMapTeam6.Views.ShoppingListPage"
              BackgroundColor="#fffffF">
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout>
-            <Label Text="Shopping List"/>
-            <CollectionView ItemsSource="{Binding StoreItems}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Text="{Binding .}"
-                        HorizontalTextAlignment="left" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Button Text="Submit List" Clicked="Button_Clicked"/>
-        </StackLayout>
-        
+        <Label Text="Shopping List"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   TextColor="Black"/>
+        <Label Text="Dariy"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionDairy" 
+                        HeightRequest="230"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="Produce"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionProduce" 
+                        HeightRequest="600"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Frozen Food"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionFrozen"
+                        HeightRequest="280"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Bread/Baked Goods"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionBaked"
+                        HeightRequest="280"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Pantry"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionPantry"
+                        HeightRequest="410"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Non-Food"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+        <CollectionView x:Name="collectionNonfood"
+                        HeightRequest="280"
+                        SelectionMode="Multiple">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                        <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Meat"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="Black"/>
+                <CollectionView x:Name="collectionMeat"
+                                HeightRequest="400"
+                                SelectionMode="Multiple">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="2"
+                                   Text="{Binding Name}"
+                                   FontAttributes="Bold"/>
+                                <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="{Binding Selected}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button Text="Submit>>" Clicked="Button_Clicked"/>
+    </StackLayout>
+    </ScrollView>
     </ContentPage.Content>
 </ContentPage>

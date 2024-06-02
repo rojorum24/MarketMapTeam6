@@ -16,5 +16,8 @@ namespace MarketMapTeam6.Views
         {
             InitializeComponent();
         }
+
+        
     }
+    
 }
