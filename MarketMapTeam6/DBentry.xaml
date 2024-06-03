@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MarketMapTeam6.DBentry">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="Entry" Placeholder="Enter New Item"/>
+            
+            <Picker x:Name="CategoryPicker" Title="Select a Category" BindingContext="True" ItemDisplayBinding="{Binding Category_Description}"/>
+            <Button Text="Add to DB" Clicked="submitItem"/>
+            <CollectionView x:Name="CollectionView" BackgroundColor="Beige">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Item_Description}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text=""/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

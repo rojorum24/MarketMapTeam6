@@ -9,13 +9,14 @@
         
         <StackLayout>
             <Label HeightRequest="350"/>
-            <Label Text="Tap Anywhere to Continue"
+            <!--Label Text="Tap Anywhere to Continue"
                    FontSize="Large"
                    TextColor="white"
                    VerticalOptions="Center" 
-                   HorizontalOptions="CenterAndExpand" />
-            <Button Text="ShoppingListPage" 
-                    Clicked="Button_Clicked"/>
+                   HorizontalOptions="CenterAndExpand" /-->
+            <Button Text="Shopping List Page" 
+                    Clicked="Button_Clicked"/><!--Need to change this to full screen button at end of dev cycle-->
+            <Button x:Name="DBentry" Text="Database Entry Form" Clicked="Button_Clicked_DBentry"/>
         </StackLayout>
         
     </ContentPage.Content>

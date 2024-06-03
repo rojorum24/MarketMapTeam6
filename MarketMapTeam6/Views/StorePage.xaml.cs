@@ -20,5 +20,9 @@ namespace MarketMapTeam6.Views
         {
             await Navigation.PushAsync(new ShoppingListPage());
         }
+        //private async void Button_Clicked_CatDB(object sender, EventArgs e)
+        //{
+        //    await Navigation.PushAsync(new DBAddItem());
+        //}
     }
 }
