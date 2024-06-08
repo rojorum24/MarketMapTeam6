@@ -1,16 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             BackgroundColor="Black"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="MarketMapTeam6.Views.StorePage">
+            
+ 
+ 
+   
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome Back!"
-                VerticalOptions="CenterAndExpand" 
+            <Label Text="Please Select Your Store"
+                   TextColor="Green"
+                   FontSize="Title"
+                VerticalOptions="StartAndExpand" 
+                    
                 HorizontalOptions="CenterAndExpand" />
+            <CollectionView x:Name="collectionStoreName" BackgroundColor="Black" SelectionMode="Single" IsVisible="False" SelectionChanged="collectionStoreName_SelectionChanged" ItemsSource="{Binding StoreName}" >
 
-            <Entry Placeholder="Enter Zip Code" />
-            <Button Text="Make Your Shoppinig List" Clicked="Button_Clicked"/>
-            
+                <CollectionView.ItemTemplate  >
+                    
+                    <DataTemplate>
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="1"
+                               Text="{Binding Name}"
+                               TextColor="White"
+                               FontAttributes="Bold" />
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding Address}"
+                               TextColor="White"
+                               FontAttributes="Italic"
+                               VerticalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+
+
+            <Entry x:Name="ZipBox" Placeholder="Enter Zip Code" BackgroundColor="White" Completed="ZipBox_Completed" Keyboard="Numeric" MaxLength="5"  >
+                <Entry.Behaviors>
+					<xct:NumericValidationBehavior
+                        
+						MinimumValue="10000"
+						MaximumValue="99999"
+                        />
+
+                </Entry.Behaviors>
+            </Entry>
+
+            <Button x:Name="ListButton" Text="Make Your Shopping List" Clicked="Button_Clicked" IsEnabled="False">
+                 
+            </Button>
         </StackLayout>
     </ContentPage.Content>
+
+    
 </ContentPage>
