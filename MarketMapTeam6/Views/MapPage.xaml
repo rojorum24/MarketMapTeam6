@@ -3,12 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MarketMapTeam6.Views.MapPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-                <Button Text="" />
-            <Button Text="Test button" />
+        <StackLayout Orientation="Vertical" x:Name="outerStack">
+
+            <!--Placeholder image for store map-->
+            <Image Source="storplaceholder.png"
+                   WidthRequest="550"/>
+            <ScrollView>
+                <StackLayout Spacing="5" HorizontalOptions="FillAndExpand"
+                         WidthRequest="300"
+                         HeightRequest="450"
+                         BackgroundColor="LightGray">
+                  <!--  <Line StrokeThickness="2" Stroke="Black" X1="0" X2="1000" Y1="1" Y2="1"/> -->
+                    <Label/> <!--for spacing-->
+                    <Label
+                          Text="Shopping List"
+                          HorizontalOptions="Center"
+                          TextColor="Black"
+                          FontSize="Medium"
+                          FontAttributes="Bold"/>
+                    <StackLayout>
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="Box1"
+                                   Grid.Column="1"
+                                   Grid.Row="0"
+                                   Color="Black"/>
+                            <Label Grid.Column="2"
+                                   Grid.Row="0"
+                                   Text="Testing"
+                                   TextColor="Black"
+                                   FontSize="Medium"/>
+                            <CheckBox x:Name="Box2"
+                                   Grid.Column="1"
+                                   Grid.Row="1"
+                                   Color="Black"/>
+                            <Label Grid.Column="2"
+                                   Grid.Row="1"
+                                   Text="Checking boxes"
+                                   TextColor="Black"
+                                   FontSize="Medium"/>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Remove="images\mmicon.png" />
     <None Remove="images\mmlogo.png" />
+    <None Remove="images\StorePlaceHoldImg.PNG" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,10 @@
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="images\StorePlaceHoldImg.PNG" />
   </ItemGroup>
 
   <ItemGroup>
