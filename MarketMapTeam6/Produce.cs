@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static MarketMapTeam6.Views.ShoppingListPage;
 
 namespace MarketMapTeam6
 {
-    internal class Produce
+    public class Produce : IShoppingItem
     {
         public string Name { get; set; }
         public int Selected { get; set; }

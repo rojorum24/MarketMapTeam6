@@ -15,8 +15,9 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionDairy" 
-                        HeightRequest="230"
-                        SelectionMode="Multiple">
+                        SelectionMode="Multiple"
+                        SelectionChanged="OnDairySelectionChanged"
+                        HeightRequest="230">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -44,6 +45,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionProduce" 
+                        SelectionChanged="OnProduceSelectionChanged"
                         HeightRequest="600"
                         SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
@@ -72,6 +74,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionFrozen"
+                        SelectionChanged="OnFrozenSelectionChanged"
                         HeightRequest="280"
                         SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
@@ -100,6 +103,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionBaked"
+                        SelectionChanged="OnBakedSelectionChanged"
                         HeightRequest="280"
                         SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
@@ -128,6 +132,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionPantry"
+                        SelectionChanged="OnPantrySelectionChanged"
                         HeightRequest="410"
                         SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
@@ -156,6 +161,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
         <CollectionView x:Name="collectionNonfood"
+                        SelectionChanged="OnNonfoodSelectionChanged"
                         HeightRequest="280"
                         SelectionMode="Multiple">
             <CollectionView.ItemTemplate>
@@ -184,6 +190,7 @@
                    FontSize="Medium"
                    TextColor="Black"/>
                 <CollectionView x:Name="collectionMeat"
+                                SelectionChanged="OnMeatSelectionChanged"
                                 HeightRequest="400"
                                 SelectionMode="Multiple">
                     <CollectionView.ItemTemplate>
@@ -207,6 +214,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <Button Text="selected" Clicked="ShowSelectedItemsButton_Clicked"/>
                 <Button Text="Submit>>" Clicked="Button_Clicked"/>
     </StackLayout>
     </ScrollView>

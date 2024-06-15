@@ -17,6 +17,12 @@ namespace MarketMapTeam6.Views
             InitializeComponent();
         }
 
+       /* private void OnShowSelectedDairyClicked(object sender, RoutedEventArgs e)
+        {
+            var selectedDairyItems = string.Join(", ", SelectedDairy.Select(d => d.Name));
+            MessageBox.Show($"Selected Dairy Items: {selectedDairyItems}");
+        }
+       */
         public double width { get; private set; }
         public double height { get; private set; }
         //Code for orentation change format

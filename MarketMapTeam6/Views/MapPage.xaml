@@ -49,6 +49,7 @@
                                    Text="Checking boxes"
                                    TextColor="Black"
                                    FontSize="Medium"/>
+                            
                         </Grid>
                     </StackLayout>
                 </StackLayout>
