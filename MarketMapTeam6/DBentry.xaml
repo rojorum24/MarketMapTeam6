@@ -4,10 +4,10 @@
              x:Class="MarketMapTeam6.DBentry">
     <ContentPage.Content>
         <StackLayout>
-            <Entry x:Name="Entry" Placeholder="Enter New Item"/>
+            <!--Entry x:Name="Entry" Placeholder="Enter New Item"/-->
             
-            <Picker x:Name="CategoryPicker" Title="Select a Category" BindingContext="True" ItemDisplayBinding="{Binding Category_Description}"/>
-            <Button Text="Add to DB" Clicked="submitItem"/>
+            <!--Picker x:Name="CategoryPicker" Title="Select a Category" BindingContext="True" ItemDisplayBinding="{Binding Category_Description}"/-->
+            <Button Text="Load Database" Clicked="LoadDatabase"/>
             <CollectionView x:Name="CollectionView" BackgroundColor="Beige">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

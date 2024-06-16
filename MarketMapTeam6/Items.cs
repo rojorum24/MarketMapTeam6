@@ -9,8 +9,8 @@ namespace MarketMapTeam6
     {
         [PrimaryKey, AutoIncrement]
         public int Item_ID { get; set; }
+        [Unique]
         public string Item_Description { get; set; }
-        //Need to learn to integrate foreign key. foreign key declaration not functioning
         public string Item_Category { get; set; }
     }
 }
