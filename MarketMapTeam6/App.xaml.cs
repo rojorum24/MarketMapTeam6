@@ -17,7 +17,7 @@ namespace MarketMapTeam6
             {
                 if(database == null)
                 {
-                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MM.db3"));
+                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MarketMap.db"));
                 }
                 return database;
             }

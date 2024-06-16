@@ -13,9 +13,8 @@
             <Label HeightRequest="350" />
 
             <Button Text="Tap Here to Continue" BackgroundColor="Transparent" HeightRequest="250" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Large"
-                    Clicked="Button_Clicked"/><!--Need to change this to full screen button at end of dev cycle-->
-                    
-            <!--Button x:Name="DBentry" Text="Database Entry Form" Clicked="Button_Clicked_DBentry"/-->
+                    Clicked="Button_Clicked"/>
+            <Button x:Name="DBentry" Text="Database Entry Form" Clicked="Button_Clicked_DBentry"/>
             <Label Text="Version 0.0.1" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" TextColor="White" />
 
         </StackLayout>
