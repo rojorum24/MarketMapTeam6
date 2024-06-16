@@ -33,6 +33,8 @@ namespace MarketMapTeam6.Views
         public interface IShoppingItem
         {
             string Name { get; set; }
+            string Category { get; set; } // Add this property
+            bool IsSelected { get; set; }
         }
         public ShoppingListPage()
         {
@@ -378,7 +380,7 @@ namespace MarketMapTeam6.Views
         }
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MapPage());
+            await Navigation.PushAsync(new MapPage(SelectedItems));
         }
     }
 

@@ -8,6 +8,7 @@ namespace MarketMapTeam6
     public class Pantry : IShoppingItem
     {
         public string Name { get; set; }
-        public int Selected { get; set; }
+        public string Category { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
