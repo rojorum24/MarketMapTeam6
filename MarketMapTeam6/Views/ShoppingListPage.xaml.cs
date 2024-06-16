@@ -166,7 +166,14 @@ namespace MarketMapTeam6.Views
                 var deselectedDairy = e.PreviousSelection.Cast<Dairy>().ToList();
                 foreach (var item in deselectedDairy)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+                        
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -191,7 +198,14 @@ namespace MarketMapTeam6.Views
                 var deselectedProduce = e.PreviousSelection.Cast<Produce>().ToList();
                 foreach (var item in deselectedProduce)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -216,7 +230,14 @@ namespace MarketMapTeam6.Views
                 var deselectedFrozen = e.PreviousSelection.Cast<Frozen>().ToList();
                 foreach (var item in deselectedFrozen)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -240,7 +261,14 @@ namespace MarketMapTeam6.Views
                 var deselectedBaked = e.PreviousSelection.Cast<Baked>().ToList();
                 foreach (var item in deselectedBaked)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -265,7 +293,14 @@ namespace MarketMapTeam6.Views
                 var deselectedPantry = e.PreviousSelection.Cast<Pantry>().ToList();
                 foreach (var item in deselectedPantry)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -290,7 +325,14 @@ namespace MarketMapTeam6.Views
                 var deselectedNonfood = e.PreviousSelection.Cast<Nonfood>().ToList();
                 foreach (var item in deselectedNonfood)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }
@@ -315,7 +357,14 @@ namespace MarketMapTeam6.Views
                 var deselectedMeat = e.PreviousSelection.Cast<Meat>().ToList();
                 foreach (var item in deselectedMeat)
                 {
-                    SelectedItems.Remove(item);
+                    if (SelectedItems.Contains(item))
+                    {
+
+                    }
+                    else
+                    {
+                        SelectedItems.Remove(item);
+                    }
                 }
             }
         }

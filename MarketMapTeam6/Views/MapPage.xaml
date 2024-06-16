@@ -7,7 +7,8 @@
 
             <!--Placeholder image for store map-->
             <Image Source="storplaceholder.png"
-                   WidthRequest="550"/>
+                   WidthRequest="550"
+                   />
             <ScrollView>
                 <StackLayout Spacing="5" HorizontalOptions="FillAndExpand"
                          WidthRequest="300"
