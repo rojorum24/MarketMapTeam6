@@ -43,6 +43,12 @@ namespace MarketMapTeam6
             //returns current full list of items when called
             return _database.Table<Items>().ToListAsync();
         }
+        public Task<List<Items>> GetItemsByCatAsync(string cat)
+        {
+            var itemsInCat = _database.Table<Items>().Where(i => i.Item_Category == cat).ToListAsync();
+            //returns current full list of items when called
+            return itemsInCat;//_database.Table<Items>().ToListAsync();
+        }
         public Task<int> SaveItemsAsync(Items items)
         {
             //adds new item to db table of Items

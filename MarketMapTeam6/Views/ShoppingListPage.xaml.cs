@@ -52,8 +52,6 @@ namespace MarketMapTeam6.Views
             };
             collectionDairy.ItemsSource = Dairy;
 
-            
-
             //Produce list items
             Produce = new ObservableCollection<Produce>()
             {
@@ -143,8 +141,6 @@ namespace MarketMapTeam6.Views
 
             };
             collectionMeat.ItemsSource = Meat;
-
-            
 
         }
 
@@ -243,6 +239,7 @@ namespace MarketMapTeam6.Views
                 }
             }
         }
+        
         //Baked
         public void OnBakedSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -373,7 +370,7 @@ namespace MarketMapTeam6.Views
         private async void ShowSelectedItemsButton_Clicked(object sender, EventArgs e)
         {
             // Create a string to display the selected items
-            string selectedItemsString = string.Join(", ", SelectedItems.Select(i => i.Name));
+            string selectedItemsString = string.Join("\n", SelectedItems.Select(i => i.Name));
 
             // Show an Alert with the selected items
             await DisplayAlert("Selected Items", selectedItemsString, "OK");
