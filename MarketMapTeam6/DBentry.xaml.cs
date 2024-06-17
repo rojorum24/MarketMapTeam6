@@ -1,5 +1,4 @@
 ﻿using SQLite;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,14 +18,55 @@ namespace MarketMapTeam6
         {
             InitializeComponent();
         }
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            CollectionView.ItemsSource = await App.Database.GetItemsAsync();
-            //CategoryPicker.ItemsSource = await App.Database.GetCategoriesAsync();
         }
+        
+        async void DeleteDatabaseItems(object sender, EventArgs e)
+        {
+            await App.Database.DeleteItemsAsync<Items>();
+            CollectionView.ItemsSource = await App.Database.GetItemsAsync();
+        }
+        async void LoadCategories(object sender, EventArgs e)
+        {
+            List<Categories> Categories = new List<Categories>()
+            {
+                new Categories(){Category_Name = "Dairy"},
+                new Categories(){Category_Name = "Produce"},
+                new Categories(){Category_Name = "Frozen"},
+                new Categories(){Category_Name = "Baked"},
+                new Categories(){Category_Name = "Pantry"},
+                new Categories(){Category_Name = "Nonfood"},
+                new Categories(){Category_Name = "Meat"}
+            };
 
+            List<string> msgListCat = new List<string>();
+            string msgCat = "";
+
+            foreach (var category in Categories)
+            {
+                try
+                {
+                    await App.Database.SaveCategoryAsync(new Categories
+                    {
+                        Category_Name = category.Category_Name
+                    });
+                }
+                catch (SQLiteException ex)
+                {
+                    msgListCat.Add(category.Category_Name);
+                }
+            }
+
+            foreach (var category in msgListCat)
+            {
+                msgCat += category + "\n";
+            }
+            await DisplayAlert("Oopse!", "Some categories already exists \n\n" + msgCat, "OK");
+
+            CollectionView.ItemsSource = await App.Database.GetCategoriesAsync();
+        }
         async void LoadDatabase(object sender, EventArgs e)
         {
             // ****** Enable this block to enable individual item entry form ******
@@ -42,6 +81,40 @@ namespace MarketMapTeam6
             //CategoryPicker.SelectedItem = -1;
             //CollectionView.ItemsSource = await App.Database.GetItemsAsync();
             //}
+
+            List<string> msgList = new List<string>();
+            string msg = "";
+
+            List<Categories> Categories = new List<Categories>()
+            {
+                new Categories(){Category_Name = "Dairy"},
+                new Categories(){Category_Name = "Produce"},
+                new Categories(){Category_Name = "Frozen"},
+                new Categories(){Category_Name = "Baked"},
+                new Categories(){Category_Name = "Pantry"},
+                new Categories(){Category_Name = "Nonfood"},
+                new Categories(){Category_Name = "Meat"}
+            };
+
+            foreach (var category in Categories)
+            {
+                try
+                {
+                    await App.Database.SaveCategoryAsync(new Categories
+                    {
+                        Category_Name = category.Category_Name
+                    });
+                }
+                catch (SQLiteException ex)
+                {
+                    msgList.Add(category.Category_Name);
+                }
+            }
+
+            foreach (var category in msgList)
+            {
+                msg += category + "\n";
+            }
 
             List<Items> Items = new List<Items>()
             {
@@ -130,11 +203,7 @@ namespace MarketMapTeam6
                 
             };
 
-            
-            List<string> msgList = new List<string>();
-            string msg = "";
-
-            // ****** Option 1: Enter all items at once, ignoring existing items
+            //Enter all items at once, ignoring existing items
             // ****** adds previously entered items to the list to print into the alert
             foreach (var item in Items)
             {
@@ -160,12 +229,19 @@ namespace MarketMapTeam6
             {
                 msg += item + "\n";
             }
-            await DisplayAlert("Oopse!", "Some items already exists \n\n" + msg, "OK");
+            await DisplayAlert("Notice", "Database Loaded", "OK");
             
             CollectionView.ItemsSource = await App.Database.GetItemsAsync();
 
         }
-
+        async void ViewDBItems(object sender, EventArgs e)
+        {
+            CollectionView.ItemsSource = await App.Database.GetItemsAsync();
+        }
+        async void ViewCategoryContents(object sender, EventArgs e)
+        {
+            CollectionView.ItemsSource = await App.Database.GetCategoriesAsync();
+        }
         public static string GetFilePath(string filename)
         {
             return System.Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

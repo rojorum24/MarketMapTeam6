@@ -9,6 +9,6 @@ namespace MarketMapTeam6
     {
         [PrimaryKey, AutoIncrement]
         public int Category_ID { get; set; }
-        public string Category_Description { get; set; }
+        public string Category_Name { get; set; }
     }
 }

@@ -14,7 +14,9 @@
 
             <Button Text="Tap Here to Continue" BackgroundColor="Transparent" HeightRequest="250" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="Large"
                     Clicked="Button_Clicked"/>
-            <Button x:Name="DBentry" Text="Database Entry Form" Clicked="Button_Clicked_DBentry"/>
+            
+            <!--Uncomment the below button to enable DB interaction from main page-->
+            <!--Button x:Name="DBentry" Text="Database Entry Form" Clicked="Button_Clicked_DBentry"/-->
             <Label Text="Version 0.0.1" HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand" TextColor="White" />
 
         </StackLayout>

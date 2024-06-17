@@ -4,6 +4,7 @@
              x:Class="MarketMapTeam6.Views.ShoppingListPage"
              BackgroundColor="#fffffF">
     <ContentPage.Content>
+        <StackLayout>
         <ScrollView>
             <StackLayout>
                 <Label Text="Shopping List"
@@ -213,10 +214,11 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <Button Text="selected" Clicked="ShowSelectedItemsButton_Clicked"/>
-                <Button Text="Submit>>" Clicked="Button_Clicked"/>
-            </StackLayout>
-        </ScrollView>
-        
+                
+    </StackLayout>
+    </ScrollView>
+            <Button Text="selected" Clicked="ShowSelectedItemsButton_Clicked"/>
+            <Button Text="Submit>>" Clicked="Button_Clicked"/>
+    </StackLayout>
     </ContentPage.Content>
 </ContentPage>

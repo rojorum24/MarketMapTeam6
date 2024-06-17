@@ -27,6 +27,15 @@ namespace MarketMapTeam6.Views
             };
             collectionStoreName.ItemsSource = StoreName; 
         }
+
+        // Establish Fresh DB build
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            App.Database.StartDatabase();
+            await DisplayAlert("Notice", "Database Loaded", "OK");
+        }
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new ShoppingListPage());
