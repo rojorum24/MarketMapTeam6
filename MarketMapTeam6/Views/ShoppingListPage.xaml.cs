@@ -18,7 +18,6 @@ namespace MarketMapTeam6.Views
     public partial class ShoppingListPage : ContentPage
     {
         //Set Item Source
-        //currently not used as of 6/17/24
         public ObservableCollection<Dairy> Dairy;
         public ObservableCollection<Produce> Produce;
         public ObservableCollection<Frozen> Frozen;
@@ -30,18 +29,6 @@ namespace MarketMapTeam6.Views
         //single collection for all selected items
         public ObservableCollection<IShoppingItem> SelectedItems { get; set; }
 
-        protected override async void OnAppearing()
-        {
-            // All items in the database are loaded into the appropriate collection for display
-            base.OnAppearing();
-            collectionDairy.ItemsSource = await App.Database.GetItemsByCatAsync("Dairy");
-            collectionProduce.ItemsSource = await App.Database.GetItemsByCatAsync("Produce");
-            collectionFrozen.ItemsSource = await App.Database.GetItemsByCatAsync("Frozen");
-            collectionBaked.ItemsSource = await App.Database.GetItemsByCatAsync("Baked");
-            collectionPantry.ItemsSource = await App.Database.GetItemsByCatAsync("Pantry");
-            collectionNonfood.ItemsSource = await App.Database.GetItemsByCatAsync("Nonfood");
-            collectionMeat.ItemsSource = await App.Database.GetItemsByCatAsync("Meat");
-        }
 
         public interface IShoppingItem
         {
@@ -49,8 +36,6 @@ namespace MarketMapTeam6.Views
             string Category { get; set; } // Add this property
             bool IsSelected { get; set; }
         }
-
-        //method ShoppingListPage no longer used to populate list. the above OnAppearing() method is used instead
         public ShoppingListPage()
         {
             InitializeComponent();
@@ -65,7 +50,7 @@ namespace MarketMapTeam6.Views
                 new Dairy { Name = "Milk"},
                 new Dairy { Name = "Yogurt"},
             };
-            //collectionDairy.ItemsSource = Dairy;
+            collectionDairy.ItemsSource = Dairy;
 
             //Produce list items
             Produce = new ObservableCollection<Produce>()
@@ -84,7 +69,7 @@ namespace MarketMapTeam6.Views
                 new Produce { Name = "Lemons"},
                 new Produce { Name = "Limes"},
             };
-            //collectionProduce.ItemsSource = Produce;
+            collectionProduce.ItemsSource = Produce;
 
             //Frozen list items
             Frozen = new ObservableCollection<Frozen>()
@@ -98,7 +83,7 @@ namespace MarketMapTeam6.Views
 
 
             };
-            //collectionFrozen.ItemsSource = Frozen;
+            collectionFrozen.ItemsSource = Frozen;
 
             //Baked list items
             Baked = new ObservableCollection<Baked>()
@@ -111,7 +96,7 @@ namespace MarketMapTeam6.Views
                 new Baked { Name = "Pie"},
 
             };
-            //collectionBaked.ItemsSource = Baked;
+            collectionBaked.ItemsSource = Baked;
 
             //Pantry list items
             Pantry = new ObservableCollection<Pantry>()
@@ -127,7 +112,7 @@ namespace MarketMapTeam6.Views
                 new Pantry { Name = "Oats"},
 
             };
-            //collectionPantry.ItemsSource = Pantry;
+            collectionPantry.ItemsSource = Pantry;
 
             //Nonfood list items
             Nonfood = new ObservableCollection<Nonfood>()
@@ -140,7 +125,7 @@ namespace MarketMapTeam6.Views
                 new Nonfood { Name = "TableCloths"},
 
             };
-            //collectionNonfood.ItemsSource = Nonfood;
+            collectionNonfood.ItemsSource = Nonfood;
 
             //Meat list items
             Meat = new ObservableCollection<Meat>()
@@ -155,8 +140,7 @@ namespace MarketMapTeam6.Views
                 new Meat { Name = "Eggs"},
 
             };
-            //collectionMeat.ItemsSource = Meat;
-
+            collectionMeat.ItemsSource = Meat;
 
         }
 

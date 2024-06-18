@@ -43,18 +43,20 @@ namespace MarketMapTeam6
             //returns current full list of items when called
             return _database.Table<Items>().ToListAsync();
         }
+        
+        //Working to establish a method to return a list of items based on category in the ShoppingList page
+        //public async Task<IEnumerable<Items>> CategoryAsync(string cat)
+        //{
+        //    Task<List<Items>> task = GetItemsByCatAsync(cat);
+        //    return await task;
+        //}
+        //public Task<List<Items>> GetItemsByCatAsync(string cat)
+        //{
+        //    //returns current full list of items when called
+            
 
-        //performs a search for items based on the category passed
-        public async Task<IEnumerable<Items>> CategoryAsync(string cat)
-        {
-            Task<List<Items>> task = GetItemsByCatAsync(cat);
-            return await task;
-        }
-        public Task<List<Items>> GetItemsByCatAsync(string cat)
-        {
-            //returns current full list of items where category matches passed value when called
-            return _database.Table<Items>().Where(i => i.Item_Category == cat).ToListAsync();
-        }
+        //    return _database.Table<Items>().Where(i => i.Item_Category == cat).ToListAsync();
+        //}
         public Task<int> SaveItemsAsync(Items items)
         {
             //adds new item to db table of Items
@@ -95,9 +97,7 @@ namespace MarketMapTeam6
         public async void StartDatabase()
         {
             //clears all tables and repopulates them with default data
-            //this ensures not duplicates alongside the "Unique" constraint in the database
-            //currently disabled due to possible crash on first startup on new device not finding Items table
-            //await DeleteItemsAsync<Items>();
+            await DeleteItemsAsync<Items>();
 
             List<string> msgList = new List<string>();
             string msg = "";
