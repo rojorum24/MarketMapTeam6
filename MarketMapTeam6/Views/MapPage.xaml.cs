@@ -210,6 +210,26 @@ namespace MarketMapTeam6.Views
     {
         public static int V = 100;
 
+        public static int[,] graph;
+
+        static GFG()
+        {
+            graph = new int[V, V];
+            for (int i = 0; i < V; i++)
+            {
+                for (int j = 0; j < V; j++)
+                {
+                    graph[i, j] = i == j ? 0 : int.MaxValue; // default weight of 0 for self-loops, and infinity for other edges
+                }
+            }
+            // Now specify weights for specific edges
+            graph[0, 1] = 10;
+            graph[0, 6] = 5;
+            graph[1, 2] = 5;
+            
+            // Add more edges to the graph as needed
+        }
+
         int minDistance(int[] dist, bool[] sptSet)
         {
             int min = int.MaxValue, min_index = -1;
