@@ -16,9 +16,9 @@ namespace MarketMapTeam6.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        private Dictionary<string, List<IShoppingItem>> CategorizedItems { get; set; }
-        public ObservableCollection<IShoppingItem> SelectedItems { get; set; }
-        public MapPage(ObservableCollection<IShoppingItem> selectedItems)
+        private Dictionary<string, List<Items>> CategorizedItems { get; set; }
+        public ObservableCollection<Items> SelectedItems { get; set; }
+        public MapPage(ObservableCollection<Items> selectedItems)
         {
             InitializeComponent();
             SelectedItems = selectedItems;
@@ -29,9 +29,10 @@ namespace MarketMapTeam6.Views
         private void CalculateShortestPath()
         {
             GFG gfg = new GFG();
-            List<int> points = gfg.GetPointsFromCategories(CategorizedItems);
+            List<int> points = gfg.GetCategoryPoints(CategorizedItems);
+            List<int> obstaclePoints = gfg.GetObstaclePoints();
             int[,] graph = new int[GFG.V, GFG.V]; // Define the graph
-            gfg.dijkstra(graph, points);
+            gfg.dijkstra(graph, points, obstaclePoints);
 
             // Add points to the map image
             DrawToMap(points);
@@ -51,9 +52,10 @@ namespace MarketMapTeam6.Views
                 // Clear any existing points and lines
                 pointsLayout.Children.Clear();
 
-                // Define the marker color and size
-                Color markerColor = Color.Red;
-                double markerSize = 20;
+                Color categoryMarkerColor = Color.Red;
+                double categoryMarkerSize = 20;
+                Color nonCategoryMarkerColor = Color.Green;
+                double nonCategoryMarkerSize = 10;
 
                 // Define the line color and thickness
                 Color lineColor = Color.Blue;
@@ -76,23 +78,100 @@ namespace MarketMapTeam6.Views
                         // Add points to the map image
                         foreach (int point in points)
                         {
-                            // Create a circular marker using the Ellipse shape
-                            Ellipse marker = new Ellipse
+                            // Check if the point is a category point
+                            bool isCategoryPoint = false;
+                            foreach (var category in CategorizedItems.Keys)
                             {
-                                WidthRequest = markerSize,
-                                HeightRequest = markerSize,
-                                Stroke = markerColor,
-                                StrokeThickness = 2,
-                                Fill = markerColor,
-                                IsVisible = true // Ensure the marker is visible
-                            };
+                                switch (category)
+                                {
+                                    case "Dairy":
+                                        if (point == 26)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Produce":
+                                        if (point == 51)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Frozen":
+                                        if (point == 29)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Baked":
+                                        if (point == 59)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Pantry":
+                                        if (point == 43)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Nonfood":
+                                        if (point == 46)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    case "Meat":
+                                        if (point == 24)
+                                        {
+                                            isCategoryPoint = true;
+                                            break;
+                                        }
+                                        break;
+                                    default:
+                                        // Handle unknown categories
+                                        break;
+                                }
+                            }
+
+                            // Create a circular marker using the Ellipse shape
+                            Ellipse marker;
+                            if (isCategoryPoint)
+                            {
+                                marker = new Ellipse
+                                {
+                                    WidthRequest = categoryMarkerSize,
+                                    HeightRequest = categoryMarkerSize,
+                                    Stroke = categoryMarkerColor,
+                                    StrokeThickness = 2,
+                                    Fill = categoryMarkerColor,
+                                    IsVisible = true // Ensure the marker is visible
+                                };
+                            }
+                            else
+                            {
+                                marker = new Ellipse
+                                {
+                                    WidthRequest = nonCategoryMarkerSize,
+                                    HeightRequest = nonCategoryMarkerSize,
+                                    Stroke = nonCategoryMarkerColor,
+                                    StrokeThickness = 2,
+                                    Fill = nonCategoryMarkerColor,
+                                    IsVisible = false // Ensure the marker is visible
+                                };
+                            }
 
                             // Calculate the position of the marker on the map image
-                            double x = (point % numCols) * (mapWidth / numCols) + (markerSize / 2);
-                            double y = (point / numCols) * (mapHeight / numRows) + (markerSize / 2);
+                            double x = (point % numCols) * (mapWidth / numCols) + (marker.WidthRequest / 2);
+                            double y = (point / numCols) * (mapHeight / numRows) + (marker.HeightRequest / 2);
 
                             // Create a Rectangle with the desired bounds
-                            Xamarin.Forms.Rectangle bounds = new Xamarin.Forms.Rectangle(x, y, markerSize, markerSize);
+                            Xamarin.Forms.Rectangle bounds = new Xamarin.Forms.Rectangle(x, y, marker.WidthRequest, marker.HeightRequest);
 
                             // Add the marker to the points layout
                             AbsoluteLayout.SetLayoutBounds(marker, bounds);
@@ -111,15 +190,16 @@ namespace MarketMapTeam6.Views
                             double x2 = (point2 % numCols) * (mapWidth / numCols) + (lineThickness / 2);
                             double y2 = (point2 / numCols) * (mapHeight / numRows) + (lineThickness / 2);
 
-                            // Create a Line with the desired bounds
+                            // Create a Line shape
                             Line line = new Line
                             {
-                                Stroke = lineColor,
-                                StrokeThickness = lineThickness,
                                 X1 = x1,
                                 Y1 = y1,
                                 X2 = x2,
-                                Y2 = y2
+                                Y2 = y2,
+                                Stroke = lineColor,
+                                StrokeThickness = lineThickness,
+                                IsVisible = true // Ensure the line is visible
                             };
 
                             // Add the line to the points layout
@@ -128,42 +208,38 @@ namespace MarketMapTeam6.Views
                     }
                 };
             }
-            else
-            {
-                Console.WriteLine("The first child of outerStack is not an AbsoluteLayout or does not contain an Image and an AbsoluteLayout.");
-            }
         }
 
         private void CategorizeItems()
         {
-            CategorizedItems = new Dictionary<string, List<IShoppingItem>>
+            CategorizedItems = new Dictionary<string, List<Items>>
             {
-                { "Dairy", new List<IShoppingItem>() },
-                { "Produce", new List<IShoppingItem>() },
-                { "Frozen", new List<IShoppingItem>() },
-                { "Baked", new List<IShoppingItem>() },
-                { "Pantry", new List<IShoppingItem>() },
-                { "Nonfood", new List<IShoppingItem>() },
-                { "Meat", new List<IShoppingItem>() }
+                { "Dairy", new List<Items>() },
+                { "Produce", new List<Items>() },
+                { "Frozen", new List<Items>() },
+                { "Baked", new List<Items>() },
+                { "Pantry", new List<Items>() },
+                { "Nonfood", new List<Items>() },
+                { "Meat", new List<Items>() }
             };
 
             foreach (var item in SelectedItems)
             {
-                if (!string.IsNullOrEmpty(item.Category))
+                if (!string.IsNullOrEmpty(item.Item_Category))
                 {
-                    if (CategorizedItems.TryGetValue(item.Category, out var categoryList))
+                    if (CategorizedItems.TryGetValue(item.Item_Category, out var categoryList))
                     {
                         categoryList.Add(item);
                     }
                     else
                     {
-                        CategorizedItems[item.Category] = new List<IShoppingItem> { item };
+                        CategorizedItems[item.Item_Category] = new List<Items> { item };
                     }
                 }
                 else
                 {
                     // Handle unknown categories
-                    Console.WriteLine($"Unknown category: {item.Name}");
+                    Console.WriteLine($"Unknown category: {item.Item_Description}");
                 }
             }
         }
@@ -174,7 +250,7 @@ namespace MarketMapTeam6.Views
             {
                 var checkBox = new CheckBox();
                 checkBox.SetBinding(CheckBox.IsCheckedProperty, new Binding("IsSelected", source: item));
-                var label = new Label { Text = item.Name };
+                var label = new Label { Text = item.Item_Description };
                 checkBoxStackLayout.Children.Add(new StackLayout { Orientation = StackOrientation.Horizontal, Children = { checkBox, label } });
             }
         }
@@ -251,7 +327,7 @@ namespace MarketMapTeam6.Views
                 Console.Write(i + " \t\t " + dist[i] + "\n");
         }
 
-        public void dijkstra(int[,] graph, List<int> points)
+        public void dijkstra(int[,] graph, List<int> points, List<int> obstaclePoints)
         {
             if (points == null || points.Count == 0)
             {
@@ -261,16 +337,18 @@ namespace MarketMapTeam6.Views
 
             int[] dist = new int[V];
             bool[] sptSet = new bool[V];
+            int[] parent = new int[V]; // Array to store the parent of each node
 
             for (int i = 0; i < V; i++)
             {
                 dist[i] = int.MaxValue;
                 sptSet[i] = false;
+                parent[i] = -1; // Initialize parent of each node as -1
             }
 
             foreach (int point in points)
             {
-                if (point >= 0 && point < V) // Check bounds
+                if (point >= 0 && point < V && !obstaclePoints.Contains(point)) // Check bounds and obstacle points
                 {
                     dist[point] = 0;
 
@@ -278,16 +356,20 @@ namespace MarketMapTeam6.Views
                     {
                         int u = minDistance(dist, sptSet);
 
-                        if (u >= 0 && u < V) // Check bounds
+                        if (u >= 0 && u < V && !obstaclePoints.Contains(u)) // Check bounds and obstacle points
                         {
                             sptSet[u] = true;
 
                             for (int v = 0; v < V; v++)
                             {
-                                if (!sptSet[v] && graph[u, v] != 0 &&
-                                     dist[u] != int.MaxValue && dist[u] + graph[u, v] < dist[v])
+                                if (!sptSet[v] && graph[u, v] != 0 && graph[u, v] != int.MaxValue && dist[u] != int.MaxValue && dist[u] + graph[u, v] < dist[v])
                                 {
-                                    dist[v] = dist[u] + graph[u, v];
+                                    // Check if the edge connects to an obstacle node
+                                    if (graph[u, v] != int.MaxValue && !obstaclePoints.Contains(v))
+                                    {
+                                        dist[v] = dist[u] + graph[u, v];
+                                        parent[v] = u; // Update parent of node v as u
+                                    }
                                 }
                             }
                         }
@@ -299,37 +381,73 @@ namespace MarketMapTeam6.Views
                 }
             }
 
-            printSolution(dist, V);
+            // Print the shortest path from the source node to all other nodes
+            for (int i = 0; i < V; i++)
+            {
+                if (i != points[0] && !obstaclePoints.Contains(i)) // Skip the source node and obstacle points
+                {
+                    Console.Write("Shortest path from " + points[0] + " to " + i + ": ");
+                    printPath(parent, i);
+                    Console.WriteLine();
+                }
+            }
         }
 
-        public List<int> GetPointsFromCategories(Dictionary<string, List<IShoppingItem>> categorizedItems)
+        private void printPath(int[] parent, int j)
         {
-            var points = new List<int>();
+            if (parent[j] == -1)
+            {
+                return;
+            }
+
+            printPath(parent, parent[j]);
+
+            Console.Write(j + " ");
+        }
+
+
+        public List<int> GetObstaclePoints()
+        {
+            var obstaclePoints = new List<int>
+            {
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                20, 33, 34, 35, 36, 37, 38,
+                64, 65, 66, 67, 68, 69, 79,
+                80, 81, 82, 83, 84, 85, 86, 87, 88, 89,
+                90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+            };
+
+            return obstaclePoints;
+        }
+        public List<int> GetCategoryPoints(Dictionary<string, List<Items>> categorizedItems)
+        {
+            var categoryPoints = new List<int>();
 
             foreach (var category in categorizedItems.Keys)
             {
                 switch (category)
                 {
                     case "Dairy":
-                        points.Add(26);
+                        categoryPoints.Add(26);
                         break;
                     case "Produce":
-                        points.Add(51);
+                        categoryPoints.Add(51);
                         break;
                     case "Frozen":
-                        points.Add(29);
+                        categoryPoints.Add(29);
                         break;
                     case "Baked":
-                        points.Add(59);
+                        categoryPoints.Add(59);
                         break;
                     case "Pantry":
-                        points.Add(43);
+                        categoryPoints.Add(43);
                         break;
                     case "Nonfood":
-                        points.Add(46);
+                        categoryPoints.Add(46);
                         break;
                     case "Meat":
-                        points.Add(24);
+                        categoryPoints.Add(24);
                         break;
                     default:
                         // Handle unknown categories
@@ -337,7 +455,16 @@ namespace MarketMapTeam6.Views
                 }
             }
 
-            return points;
+            // Generate all non-obstacle points
+            for (int i = 0; i < V; i++)
+            {
+                if (!GetObstaclePoints().Contains(i) && !categoryPoints.Contains(i))
+                {
+                    categoryPoints.Add(i);
+                }
+            }
+
+            return categoryPoints;
         }
     }
 

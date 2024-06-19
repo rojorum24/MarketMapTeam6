@@ -151,7 +151,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedDairy = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedDairy = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedDairy)
                 {
                     if (SelectedItems.Contains(item))
@@ -183,7 +183,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedProduce = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedProduce = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedProduce)
                 {
                     if (SelectedItems.Contains(item))
@@ -215,7 +215,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedFrozen = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedFrozen = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedFrozen)
                 {
                     if (SelectedItems.Contains(item))
@@ -247,7 +247,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedBaked = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedBaked = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedBaked)
                 {
                     if (SelectedItems.Contains(item))
@@ -279,7 +279,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedPantry = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedPantry = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedPantry)
                 {
                     if (SelectedItems.Contains(item))
@@ -311,7 +311,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedNonfood = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedNonfood = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedNonfood)
                 {
                     if (SelectedItems.Contains(item))
@@ -343,7 +343,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedMeat = e.CurrentSelection.Cast<Items>().ToList();
+                var deselectedMeat = e.PreviousSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedMeat)
                 {
                     if (SelectedItems.Contains(item))
