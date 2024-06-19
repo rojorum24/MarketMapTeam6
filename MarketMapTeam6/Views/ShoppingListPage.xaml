@@ -35,7 +35,7 @@
                                     FontAttributes="Bold"/>
                                 <Label Grid.Column="2"
                                     Grid.Row="1"
-                                    Text="{Binding Selected}"/>
+                                    /><!--Text="{Binding Selected}"-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -62,10 +62,10 @@
                                 <Label Grid.Column="2"
                                            Text="{Binding Item_Description}"
                                            FontAttributes="Bold"/>
-                                <Label Grid.Column="2"
+                                    <Label Grid.Column="2"
                                            Grid.Row="1"
-                                           Text="{Binding Selected}"/>
-                            </Grid>
+                                           /><!--Text="{Binding Selected}"-->
+                                </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -91,9 +91,9 @@
                                 <Label Grid.Column="2"
                                            Text="{Binding Item_Description}"
                                            FontAttributes="Bold"/>
-                                <Label Grid.Column="2"
+                                    <Label Grid.Column="2"
                                            Grid.Row="1"
-                                           Text="{Binding Selected}"/>
+                                           /><!--Text="{Binding Selected}"-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -122,7 +122,7 @@
                                            FontAttributes="Bold"/>
                                 <Label Grid.Column="2"
                                            Grid.Row="1"
-                                           Text="{Binding Selected}"/>
+                                           /><!--Text="{Binding Selected}"-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -151,7 +151,7 @@
                                            FontAttributes="Bold"/>
                                 <Label Grid.Column="2"
                                            Grid.Row="1"
-                                           Text="{Binding Selected}"/>
+                                           /><!--Text="{Binding Selected}"-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -178,9 +178,9 @@
                                 <Label Grid.Column="2"
                                            Text="{Binding Item_Description}"
                                            FontAttributes="Bold"/>
-                                <Label Grid.Column="2"
+                                    <Label Grid.Column="2"
                                            Grid.Row="1"
-                                           Text="{Binding Selected}"/>
+                                           /><!--Text="{Binding Selected}"-->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -189,33 +189,34 @@
                            FontAttributes="Bold"
                            FontSize="Medium"
                            TextColor="Black"/>
-                <CollectionView x:Name="collectionMeat"
+                    <CollectionView x:Name="collectionMeat"
                     SelectionChanged="OnMeatSelectionChanged"
                     HeightRequest="400"
                     SelectionMode="Multiple">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="2"
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="2"
                             Text="{Binding Item_Description}"
                             FontAttributes="Bold"/>
-                        <Label Grid.Column="2"
+                                    <Label Grid.Column="2"
                             Grid.Row="1"
-                            Text="{Binding Selected}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                
-    </StackLayout>
+                            />
+                                    <!--Text="{Binding Selected}"-->
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </StackLayout>
     </ScrollView>
             <Button Text="selected" Clicked="ShowSelectedItemsButton_Clicked"/>
             <Button Text="Submit>>" Clicked="Button_Clicked"/>

@@ -44,7 +44,7 @@ namespace MarketMapTeam6
             return _database.Table<Items>().ToListAsync();
         }
 
-        //performs a search for items based on the category passed
+            //performs a search for items based on the category passed
         public async Task<IEnumerable<Items>> CategoryAsync(string cat)
         {
             Task<List<Items>> task = GetItemsByCatAsync(cat);
@@ -136,7 +136,7 @@ namespace MarketMapTeam6
             List<Items> Items = new List<Items>()
             {
                 //Dairy Items
-                new Items(){Item_Description = "Buter", Item_Category = "Dairy"},
+                new Items(){Item_Description = "Butter", Item_Category = "Dairy"},
                 new Items(){Item_Description = "Cheddar Cheese", Item_Category = "Dairy"},
                 new Items(){Item_Description = "Heavy Cream", Item_Category = "Dairy"},
                 new Items(){Item_Description = "Milk", Item_Category = "Dairy"},

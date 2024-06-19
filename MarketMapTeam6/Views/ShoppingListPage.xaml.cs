@@ -17,147 +17,121 @@ namespace MarketMapTeam6.Views
 
     public partial class ShoppingListPage : ContentPage
     {
-        //Set Item Source
-        //currently not used as of 6/17/24
-        public ObservableCollection<Dairy> Dairy;
-        public ObservableCollection<Produce> Produce;
-        public ObservableCollection<Frozen> Frozen;
-        public ObservableCollection<Baked> Baked;
-        public ObservableCollection<Pantry> Pantry;
-        public ObservableCollection<Nonfood> Nonfood;
-        public ObservableCollection<Meat> Meat;
-
-        //single collection for all selected items
-        public ObservableCollection<IShoppingItem> SelectedItems { get; set; }
-
         protected override async void OnAppearing()
         {
-            // All items in the database are loaded into the appropriate collection for display
-            base.OnAppearing();
-            collectionDairy.ItemsSource = await App.Database.GetItemsByCatAsync("Dairy");
-            collectionProduce.ItemsSource = await App.Database.GetItemsByCatAsync("Produce");
-            collectionFrozen.ItemsSource = await App.Database.GetItemsByCatAsync("Frozen");
-            collectionBaked.ItemsSource = await App.Database.GetItemsByCatAsync("Baked");
-            collectionPantry.ItemsSource = await App.Database.GetItemsByCatAsync("Pantry");
-            collectionNonfood.ItemsSource = await App.Database.GetItemsByCatAsync("Nonfood");
-            collectionMeat.ItemsSource = await App.Database.GetItemsByCatAsync("Meat");
+            try
+            {
+                base.OnAppearing();
+                App.Database.StartDatabase();
+                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
+        List<Items> dairyList = new List<Items>();
+        List<Items> produceList = new List<Items>();
+        List<Items> frozenList = new List<Items>();
+        List<Items> bakedList = new List<Items>();
+        List<Items> pantryList = new List<Items>();
+        List<Items> nonfoodList = new List<Items>();
+        List<Items> meatList = new List<Items>();
+
+        //Tester collections for lists established above
+        public ObservableCollection<Items> DairyCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> ProduceCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> FrozenCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> BakedCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> PantryCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> NonfoodCollection = new ObservableCollection<Items>();
+        public ObservableCollection<Items> MeatCollection = new ObservableCollection<Items>();
+
+        //****IShoppingItem not implemented from here forward under DB interface****
+        //leaving in place for testing purposes
         public interface IShoppingItem
         {
-            string Name { get; set; }
-            string Category { get; set; } // Add this property
+            string Item_Description { get; set; }
+            string Item_Category { get; set; }
             bool IsSelected { get; set; }
         }
 
-        //method ShoppingListPage no longer used to populate list. the above OnAppearing() method is used instead
+        //single collection for all selected items
+        public ObservableCollection<Items> SelectedItems { get; set; }
+
+        public async void PopulateCollections()
+        {
+            try
+            {
+                //populate lists of type Items from database to be assigned as item source for each collection
+                dairyList = await App.Database.GetItemsByCatAsync("Dairy");
+                produceList = await App.Database.GetItemsByCatAsync("Produce");
+                frozenList = await App.Database.GetItemsByCatAsync("Frozen");
+                bakedList = await App.Database.GetItemsByCatAsync("Baked");
+                pantryList = await App.Database.GetItemsByCatAsync("Pantry");
+                nonfoodList = await App.Database.GetItemsByCatAsync("Nonfood");
+                meatList = await App.Database.GetItemsByCatAsync("Meat");
+
+                //populate collections with items from lists of database items
+                foreach (Items item in dairyList)
+                {
+                    DairyCollection.Add(item);
+                }
+                foreach (Items item in produceList)
+                {
+                    ProduceCollection.Add(item);
+                }
+                foreach (Items item in frozenList)
+                {
+                    FrozenCollection.Add(item);
+                }
+                foreach (Items item in bakedList)
+                {
+                    BakedCollection.Add(item);
+                }
+                foreach (Items item in pantryList)
+                {
+                    PantryCollection.Add(item);
+                }
+                foreach (Items item in nonfoodList)
+                {
+                    NonfoodCollection.Add(item);
+                }
+                foreach (Items item in meatList)
+                {
+                    MeatCollection.Add(item);
+                }
+
+                collectionDairy.ItemsSource = DairyCollection;
+                collectionProduce.ItemsSource = ProduceCollection;
+                collectionFrozen.ItemsSource = FrozenCollection;
+                collectionBaked.ItemsSource = BakedCollection;
+                collectionPantry.ItemsSource = PantryCollection;
+                collectionNonfood.ItemsSource = NonfoodCollection;
+                collectionMeat.ItemsSource = MeatCollection;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(" - Failed at: PopulateCollections()" + e);
+            }
+            
+
+        }
+
         public ShoppingListPage()
         {
-            InitializeComponent();
-
-            SelectedItems = new ObservableCollection<IShoppingItem>();
-            //Dairy list items
-            Dairy = new ObservableCollection<Dairy>()
+            try 
+            { 
+                InitializeComponent();
+                PopulateCollections();
+            }
+            catch (Exception e) 
             {
-                new Dairy { Name = "Butter"},
-                new Dairy { Name = "Cheese"},
-                new Dairy { Name = "Cream"},
-                new Dairy { Name = "Milk"},
-                new Dairy { Name = "Yogurt"},
-            };
-            //collectionDairy.ItemsSource = Dairy;
-
-            //Produce list items
-            Produce = new ObservableCollection<Produce>()
-            {
-                new Produce { Name = "Carrots"},
-                new Produce { Name = "Peas"},
-                new Produce { Name = "Broccoli"},
-                new Produce { Name = "Celery"},
-                new Produce { Name = "Peppers"},
-                new Produce { Name = "Lettuce"},
-                new Produce { Name = "Kale"},
-                new Produce { Name = "Apples"},
-                new Produce { Name = "Oranges"},
-                new Produce { Name = "Bananas"},
-                new Produce { Name = "Pears"},
-                new Produce { Name = "Lemons"},
-                new Produce { Name = "Limes"},
-            };
-            //collectionProduce.ItemsSource = Produce;
-
-            //Frozen list items
-            Frozen = new ObservableCollection<Frozen>()
-            {
-                new Frozen { Name = "Pizza"},
-                new Frozen { Name = "Fries"},
-                new Frozen { Name = "Chicken Fingers"},
-                new Frozen { Name = "Ice Cream"},
-                new Frozen { Name = "Breakfast Sandwhich"},
-                new Frozen { Name = "Frozen Vegetables"},
-
-
-            };
-            //collectionFrozen.ItemsSource = Frozen;
-
-            //Baked list items
-            Baked = new ObservableCollection<Baked>()
-            {
-                new Baked { Name = "White Bread"},
-                new Baked { Name = "Multigrain Bread"},
-                new Baked { Name = "Bagettes"},
-                new Baked { Name = "Muffins"},
-                new Baked { Name = "Cake"},
-                new Baked { Name = "Pie"},
-
-            };
-            //collectionBaked.ItemsSource = Baked;
-
-            //Pantry list items
-            Pantry = new ObservableCollection<Pantry>()
-            {
-                new Pantry { Name = "Ketchup"},
-                new Pantry { Name = "Mustard"},
-                new Pantry { Name = "Relish"},
-                new Pantry { Name = "Mayonnaise"},
-                new Pantry { Name = "BBQ Sauce"},
-                new Pantry { Name = "Soy Sauce"},
-                new Pantry { Name = "Cereal"},
-                new Pantry { Name = "Rice"},
-                new Pantry { Name = "Oats"},
-
-            };
-            //collectionPantry.ItemsSource = Pantry;
-
-            //Nonfood list items
-            Nonfood = new ObservableCollection<Nonfood>()
-            {
-                new Nonfood { Name = "Plates"},
-                new Nonfood { Name = "Silverware"},
-                new Nonfood { Name = "Cups"},
-                new Nonfood { Name = "Napkins"},
-                new Nonfood { Name = "Paper Plates"},
-                new Nonfood { Name = "TableCloths"},
-
-            };
-            //collectionNonfood.ItemsSource = Nonfood;
-
-            //Meat list items
-            Meat = new ObservableCollection<Meat>()
-            {
-                new Meat { Name = "Beef"},
-                new Meat { Name = "Steak"},
-                new Meat { Name = "Chicken"},
-                new Meat { Name = "Pork"},
-                new Meat { Name = "Bacon"},
-                new Meat { Name = "Turkey"},
-                new Meat { Name = "Lamb"},
-                new Meat { Name = "Eggs"},
-
-            };
-            //collectionMeat.ItemsSource = Meat;
-
-
+                Debug.WriteLine(" - Failed at: InitializeComponent()" + e); 
+            }
+            
+            SelectedItems = new ObservableCollection<Items>();
         }
 
         //dairy
@@ -165,7 +139,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedDairy = e.CurrentSelection.Cast<Dairy>().ToList();
+                var selectedDairy = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedDairy)
                 {
                     if (!SelectedItems.Contains(item))
@@ -177,7 +151,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedDairy = e.PreviousSelection.Cast<Dairy>().ToList();
+                var deselectedDairy = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedDairy)
                 {
                     if (SelectedItems.Contains(item))
@@ -197,7 +171,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedProduce = e.CurrentSelection.Cast<Produce>().ToList();
+                var selectedProduce = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedProduce)
                 {
                     if (!SelectedItems.Contains(item))
@@ -209,7 +183,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedProduce = e.PreviousSelection.Cast<Produce>().ToList();
+                var deselectedProduce = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedProduce)
                 {
                     if (SelectedItems.Contains(item))
@@ -229,7 +203,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedFrozen = e.CurrentSelection.Cast<Frozen>().ToList();
+                var selectedFrozen = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedFrozen)
                 {
                     if (!SelectedItems.Contains(item))
@@ -241,7 +215,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedFrozen = e.PreviousSelection.Cast<Frozen>().ToList();
+                var deselectedFrozen = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedFrozen)
                 {
                     if (SelectedItems.Contains(item))
@@ -261,7 +235,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedBaked = e.CurrentSelection.Cast<Baked>().ToList();
+                var selectedBaked = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedBaked)
                 {
                     if (!SelectedItems.Contains(item))
@@ -273,7 +247,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedBaked = e.PreviousSelection.Cast<Baked>().ToList();
+                var deselectedBaked = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedBaked)
                 {
                     if (SelectedItems.Contains(item))
@@ -293,7 +267,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedPantry = e.CurrentSelection.Cast<Pantry>().ToList();
+                var selectedPantry = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedPantry)
                 {
                     if (!SelectedItems.Contains(item))
@@ -305,7 +279,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedPantry = e.PreviousSelection.Cast<Pantry>().ToList();
+                var deselectedPantry = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedPantry)
                 {
                     if (SelectedItems.Contains(item))
@@ -325,7 +299,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedNonfood = e.CurrentSelection.Cast<Nonfood>().ToList();
+                var selectedNonfood = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedNonfood)
                 {
                     if (!SelectedItems.Contains(item))
@@ -337,7 +311,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedNonfood = e.PreviousSelection.Cast<Nonfood>().ToList();
+                var deselectedNonfood = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedNonfood)
                 {
                     if (SelectedItems.Contains(item))
@@ -357,7 +331,7 @@ namespace MarketMapTeam6.Views
         {
             if (e.CurrentSelection != null)
             {
-                var selectedMeat = e.CurrentSelection.Cast<Meat>().ToList();
+                var selectedMeat = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in selectedMeat)
                 {
                     if (!SelectedItems.Contains(item))
@@ -369,7 +343,7 @@ namespace MarketMapTeam6.Views
             if (e.PreviousSelection != null)
             {
                 // Remove the deselected items from the SelectedItems collection
-                var deselectedMeat = e.PreviousSelection.Cast<Meat>().ToList();
+                var deselectedMeat = e.CurrentSelection.Cast<Items>().ToList();
                 foreach (var item in deselectedMeat)
                 {
                     if (SelectedItems.Contains(item))
@@ -383,14 +357,16 @@ namespace MarketMapTeam6.Views
                 }
             }
         }
+        
         private async void ShowSelectedItemsButton_Clicked(object sender, EventArgs e)
         {
             // Create a string to display the selected items
-            string selectedItemsString = string.Join("\n", SelectedItems.Select(i => i.Name));
+            string selectedItemsString = string.Join("\n", SelectedItems.Select(i => i.Item_Description));
 
             // Show an Alert with the selected items
             await DisplayAlert("Selected Items", selectedItemsString, "OK");
         }
+        
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new MapPage(SelectedItems));

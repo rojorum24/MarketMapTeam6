@@ -7,8 +7,8 @@ namespace MarketMapTeam6
 {
     public class Baked : IShoppingItem
     {
-        public string Name { get; set; }
-        public string Category { get; set; }
+        public string Item_Description { get; set; }
+        public string Item_Category { get; set; }
         public bool IsSelected { get; set; }
     }
 }
