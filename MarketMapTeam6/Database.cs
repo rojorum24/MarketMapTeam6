@@ -95,9 +95,7 @@ namespace MarketMapTeam6
         public async void StartDatabase()
         {
             //clears all tables and repopulates them with default data
-            //this ensures not duplicates alongside the "Unique" constraint in the database
-            //currently disabled due to possible crash on first startup on new device not finding Items table
-            //await DeleteItemsAsync<Items>();
+            await DeleteItemsAsync<Items>();
 
             List<string> msgList = new List<string>();
             string msg = "";

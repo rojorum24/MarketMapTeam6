@@ -6,9 +6,16 @@
         <StackLayout Orientation="Vertical" x:Name="outerStack">
 
             <!--Placeholder image for store map-->
-            <Image Source="storplaceholder.png"
-                   WidthRequest="550"
-                   />
+            <AbsoluteLayout WidthRequest="550" HeightRequest="300">
+                <Image Source="Store_Map_WinCocr.png"
+                       WidthRequest="550"
+                       HeightRequest="550"
+                       AbsoluteLayout.LayoutFlags="All"
+                       AbsoluteLayout.LayoutBounds="0, 0, 1, 1" />
+
+                <!-- Add points to the map image -->
+                <AbsoluteLayout x:Name="pointsLayout" />
+            </AbsoluteLayout>
             <StackLayout Spacing="5" HorizontalOptions="FillAndExpand"
                          WidthRequest="300"
                          HeightRequest="450"
