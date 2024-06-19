@@ -311,25 +311,25 @@ namespace MarketMapTeam6.Views
                 switch (category)
                 {
                     case "Dairy":
-                        points.Add(21);
-                        break;
-                    case "Produce":
-                        points.Add(41);
-                        break;
-                    case "Frozen":
-                        points.Add(59);
-                        break;
-                    case "Baked":
-                        points.Add(76);
-                        break;
-                    case "Pantry":
                         points.Add(26);
                         break;
+                    case "Produce":
+                        points.Add(51);
+                        break;
+                    case "Frozen":
+                        points.Add(29);
+                        break;
+                    case "Baked":
+                        points.Add(59);
+                        break;
+                    case "Pantry":
+                        points.Add(43);
+                        break;
                     case "Nonfood":
-                        points.Add(66);
+                        points.Add(46);
                         break;
                     case "Meat":
-                        points.Add(49);
+                        points.Add(24);
                         break;
                     default:
                         // Handle unknown categories
