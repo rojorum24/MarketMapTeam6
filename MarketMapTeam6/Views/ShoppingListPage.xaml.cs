@@ -22,14 +22,14 @@ namespace MarketMapTeam6.Views
             try
             {
                 base.OnAppearing();
-                App.Database.StartDatabase();
-                
+                PopulateCollections();
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
         }
+
 
         List<Items> dairyList = new List<Items>();
         List<Items> produceList = new List<Items>();
@@ -39,7 +39,7 @@ namespace MarketMapTeam6.Views
         List<Items> nonfoodList = new List<Items>();
         List<Items> meatList = new List<Items>();
 
-        //Tester collections for lists established above
+        //collections for lists established above
         public ObservableCollection<Items> DairyCollection = new ObservableCollection<Items>();
         public ObservableCollection<Items> ProduceCollection = new ObservableCollection<Items>();
         public ObservableCollection<Items> FrozenCollection = new ObservableCollection<Items>();
@@ -64,43 +64,59 @@ namespace MarketMapTeam6.Views
         {
             try
             {
+                App.Database.StartDatabase();
+                //Debug.WriteLine(" - Database Started\n"+App.Database.GetItemsAsync().ToString());
                 //populate lists of type Items from database to be assigned as item source for each collection
                 dairyList = await App.Database.GetItemsByCatAsync("Dairy");
+                //Debug.WriteLine(" - DairyList Count: " + dairyList.Count);
                 produceList = await App.Database.GetItemsByCatAsync("Produce");
+                //Debug.WriteLine(" - ProduceList Count: " + produceList.Count);
                 frozenList = await App.Database.GetItemsByCatAsync("Frozen");
+                //Debug.WriteLine(" - FrozenList Count: " + frozenList.Count);
                 bakedList = await App.Database.GetItemsByCatAsync("Baked");
+                //Debug.WriteLine(" - BakedList Count: " + bakedList.Count);
                 pantryList = await App.Database.GetItemsByCatAsync("Pantry");
+                //Debug.WriteLine(" - PantryList Count: " + pantryList.Count);
                 nonfoodList = await App.Database.GetItemsByCatAsync("Nonfood");
+                //Debug.WriteLine(" - NonfoodList Count: " + nonfoodList.Count);
                 meatList = await App.Database.GetItemsByCatAsync("Meat");
+                //Debug.WriteLine(" - MeatList Count: " + meatList.Count);
 
                 //populate collections with items from lists of database items
                 foreach (Items item in dairyList)
                 {
                     DairyCollection.Add(item);
+                    //Debug.WriteLine(" - DairyCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in produceList)
                 {
                     ProduceCollection.Add(item);
+                    //Debug.WriteLine(" - ProduceCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in frozenList)
                 {
                     FrozenCollection.Add(item);
+                    //Debug.WriteLine(" - FrozenCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in bakedList)
                 {
                     BakedCollection.Add(item);
+                    //Debug.WriteLine(" - BakedCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in pantryList)
                 {
                     PantryCollection.Add(item);
+                    //Debug.WriteLine(" - PantryCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in nonfoodList)
                 {
                     NonfoodCollection.Add(item);
+                    //Debug.WriteLine(" - NonfoodCollection Item added: " + item.Item_Description);
                 }
                 foreach (Items item in meatList)
                 {
                     MeatCollection.Add(item);
+                    //Debug.WriteLine(" - MeatCollection Item added: " + item.Item_Description);
                 }
 
                 collectionDairy.ItemsSource = DairyCollection;
@@ -124,7 +140,7 @@ namespace MarketMapTeam6.Views
             try 
             { 
                 InitializeComponent();
-                PopulateCollections();
+                
             }
             catch (Exception e) 
             {

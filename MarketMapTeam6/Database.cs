@@ -94,9 +94,6 @@ namespace MarketMapTeam6
         //Runs upon navigation to StorePage: clears all tables and repopulates them with default data
         public async void StartDatabase()
         {
-            //clears all tables and repopulates them with default data
-            await DeleteItemsAsync<Items>();
-
             List<string> msgList = new List<string>();
             string msg = "";
 

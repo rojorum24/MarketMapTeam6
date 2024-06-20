@@ -12,6 +12,6 @@ namespace MarketMapTeam6
         [Unique]
         public string Item_Description { get; set; }
         public string Item_Category { get; set; }
-        public bool Selected { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
