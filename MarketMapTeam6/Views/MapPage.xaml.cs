@@ -18,18 +18,26 @@ namespace MarketMapTeam6.Views
     {
         private Dictionary<string, List<Items>> CategorizedItems { get; set; }
         public ObservableCollection<Items> SelectedItems { get; set; }
+        public Dictionary<string, List<Items>> SelectedCategorizedItems { get; set; }
+
         public MapPage(ObservableCollection<Items> selectedItems)
         {
             InitializeComponent();
             SelectedItems = selectedItems;
             CreateCheckBoxes();
             CategorizeItems();
+            SelectedCategorizedItems = new Dictionary<string, List<Items>>();
+            // Initialize SelectedCategorizedItems here
+            foreach (var category in CategorizedItems.Keys)
+            {
+                SelectedCategorizedItems[category] = CategorizedItems[category].Where(i => i.IsSelected).ToList();
+            }
             CalculateShortestPath(); // Call CalculateShortestPath here
         }
         private void CalculateShortestPath()
         {
             GFG gfg = new GFG();
-            List<Tuple<int, int>> points = gfg.GetCategoryPoints(CategorizedItems);
+            List<Tuple<int, int>> points = gfg.GetCategoryPoints(CategorizedItems, SelectedCategorizedItems);
             List<int> obstaclePoints = gfg.GetObstaclePoints();
             int[,] graph = new int[GFG.V, GFG.V]; // Define the graph
             gfg.dijkstra(graph, points, obstaclePoints);
@@ -41,175 +49,261 @@ namespace MarketMapTeam6.Views
         private bool pointsAdded = false;
 
         private void DrawToMap(List<Tuple<int, int>> points)
-{
-    // Get the map image and its layout
-    if (outerStack.Children.Count > 0 && outerStack.Children[0] is AbsoluteLayout mapLayout)
-    {
-        Image mapImage = mapLayout.Children[0] as Image;
-        AbsoluteLayout pointsLayout = mapLayout.Children[1] as AbsoluteLayout;
-
-        // Clear any existing points and lines
-        pointsLayout.Children.Clear();
-
-        Color categoryMarkerColor = Color.Red;
-        double categoryMarkerSize = 20;
-        Color nonCategoryMarkerColor = Color.Green;
-        double nonCategoryMarkerSize = 10;
-
-        // Define the line color and thickness
-        Color lineColor = Color.Blue;
-        double lineThickness = 2;
-
-        // Get the actual size of the map image
-        mapImage.SizeChanged += (sender, e) =>
         {
-            if (!pointsAdded)
+            // Get the map image and its layout
+            if (outerStack.Children.Count > 0 && outerStack.Children[0] is AbsoluteLayout mapLayout)
             {
-                pointsAdded = true;
+                Image mapImage = mapLayout.Children[0] as Image;
+                AbsoluteLayout pointsLayout = mapLayout.Children[1] as AbsoluteLayout;
 
-                double mapWidth = mapImage.Width;
-                double mapHeight = mapImage.Height;
+                // Clear any existing points and lines
+                pointsLayout.Children.Clear();
 
-                // Calculate the number of rows and columns in the map
-                int numRows = (int)Math.Ceiling(Math.Sqrt(GFG.V));
-                int numCols = (int)Math.Ceiling((double)GFG.V / numRows);
+                Color categoryMarkerColor = Color.Red;
+                double categoryMarkerSize = 20;
+                Color nonCategoryMarkerColor = Color.Green;
+                double nonCategoryMarkerSize = 10;
 
-                // Add points to the map image
-                foreach (var point in points)
+                // Define the line color and thickness
+                Color lineColor = Color.Blue;
+                double lineThickness = 2;
+
+                bool pointsAdded = false;
+
+                mapImage.SizeChanged += (sender, e) =>
                 {
-                    int x = point.Item1;
-                    int y = point.Item2;
-
-                    // Check if the point is a category point
-                    bool isCategoryPoint = false;
-                    foreach (var category in CategorizedItems.Keys)
+                    if (!pointsAdded && points != null && points.Count > 0)
                     {
-                        switch (category)
+                        pointsAdded = true;
+
+                        double mapWidth = mapImage.Width;
+                        double mapHeight = mapImage.Height;
+
+                        // Calculate the number of rows and columns in the map
+                        int numRows = (int)Math.Ceiling(Math.Sqrt(GFG.V));
+                        int numCols = (int)Math.Ceiling((double)GFG.V / numRows);
+
+                        // Add points to the map image
+                        foreach (var point in points)
                         {
-                            case "Dairy":
-                                if (x == 26)
+                            int x = point.Item1;
+                            int y = point.Item2;
+
+                            // Check if the point is a category point
+                            bool isCategoryPoint = false;
+                            if (CategorizedItems != null)
+                            {
+                                foreach (var category in CategorizedItems.Keys)
                                 {
-                                    isCategoryPoint = true;
-                                    break;
+                                    switch (category)
+                                    {
+                                        case "Dairy":
+                                            if (x == 26)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Dairy"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Produce":
+                                            if (x == 51)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Produce"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Frozen":
+                                            if (x == 29)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Frozen"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Baked":
+                                            if (x == 59)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Baked"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Pantry":
+                                            if (x == 43)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Pantry"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Nonfood":
+                                            if (x == 46)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Nonfood"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        case "Meat":
+                                            if (x == 24)
+                                            {
+                                                isCategoryPoint = SelectedCategorizedItems["Meat"].Count > 0;
+                                            }
+                                            break; // Add this break statement
+                                        default:
+                                            // Handle unknown categories
+                                            break; // Add this break statement
+                                    }
                                 }
-                                break;
-                            case "Produce":
-                                if (x == 51)
+                            }
+
+                            Ellipse marker;
+                            if (isCategoryPoint)
+                            {
+                                marker = new Ellipse
                                 {
-                                    isCategoryPoint = true;
-                                    break;
-                                }
-                                break;
-                            case "Frozen":
-                                if (x == 29)
+                                    WidthRequest = categoryMarkerSize,
+                                    HeightRequest = categoryMarkerSize,
+                                    Stroke = categoryMarkerColor,
+                                    StrokeThickness = 2,
+                                    Fill = categoryMarkerColor,
+                                    IsVisible = true // Ensure the marker is visible
+                                };
+                            }
+                            else
+                            {
+                                marker = new Ellipse
                                 {
-                                    isCategoryPoint = true;
-                                    break;
-                                }
-                                break;
-                            case "Baked":
-                                if (x == 59)
+                                    WidthRequest = nonCategoryMarkerSize,
+                                    HeightRequest = nonCategoryMarkerSize,
+                                    Stroke = nonCategoryMarkerColor,
+                                    StrokeThickness = 2,
+                                    Fill = nonCategoryMarkerColor,
+                                    IsVisible = true // Ensure the marker is visible
+                                };
+                            }
+
+                            // Calculate the position of the marker on the map image
+                            double markerX = (x % numCols) * (mapWidth / numCols) + (marker.WidthRequest / 2);
+                            double markerY = (x / numCols) * (mapHeight / numRows) + (marker.HeightRequest / 2);
+
+                            // Create a Rectangle with the desired bounds
+                            Xamarin.Forms.Rectangle bounds = new Xamarin.Forms.Rectangle(markerX, markerY, marker.WidthRequest, marker.HeightRequest);
+
+                            // Add the marker to the points layout
+                            AbsoluteLayout.SetLayoutBounds(marker, bounds);
+                            pointsLayout.Children.Add(marker); // Add the marker to the layout
+                        }
+
+                        // Add lines between the points on the map image
+                        for (int i = 0; i < points.Count - 1; i++)
+                        {
+                            var point1 = points[i];
+                            var point2 = points[i + 1];
+
+                            // Check if both points are category points
+                            bool isPoint1CategoryPoint = false;
+                            bool isPoint2CategoryPoint = false;
+                            if (CategorizedItems != null)
+                            {
+                                foreach (var category in CategorizedItems.Keys)
                                 {
-                                    isCategoryPoint = true;
-                                    break;
+                                    switch (category)
+                                    {
+                                        case "Dairy":
+                                            if (point1.Item1 == 26)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Dairy"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 26)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Dairy"].Count > 0;
+                                            }
+                                            break;
+                                        case "Produce":
+                                            if (point1.Item1 == 51)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Produce"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 51)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Produce"].Count > 0;
+                                            }
+                                            break;
+                                        case "Frozen":
+                                            if (point1.Item1 == 29)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Frozen"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 29)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Frozen"].Count > 0;
+                                            }
+                                            break;
+                                        case "Baked":
+                                            if (point1.Item1 == 59)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Baked"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 59)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Baked"].Count > 0;
+                                            }
+                                            break;
+                                        case "Pantry":
+                                            if (point1.Item1 == 43)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Pantry"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 43)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Pantry"].Count > 0;
+                                            }
+                                            break;
+                                        case "Nonfood":
+                                            if (point1.Item1 == 46)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Nonfood"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 46)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Nonfood"].Count > 0;
+                                            }
+                                            break;
+                                        case "Meat":
+                                            if (point1.Item1 == 24)
+                                            {
+                                                isPoint1CategoryPoint = SelectedCategorizedItems["Meat"].Count > 0;
+                                            }
+                                            if (point2.Item1 == 24)
+                                            {
+                                                isPoint2CategoryPoint = SelectedCategorizedItems["Meat"].Count > 0;
+                                            }
+                                            break;
+                                        default:
+                                            // Handle unknown categories
+                                            break;
+                                    }
                                 }
-                                break;
-                            case "Pantry":
-                                if (x == 43)
+                            }
+
+                            // Only draw a line if both points are category points
+                            if (isPoint1CategoryPoint && isPoint2CategoryPoint)
+                            {
+                                // Calculate the position of the line on the map image
+                                double lineX1 = (point1.Item1 % numCols) * (mapWidth / numCols) + (marker.WidthRequest / 2);
+                                double lineY1 = (point1.Item1 / numCols) * (mapHeight / numRows) + (marker.HeightRequest / 2);
+                                double lineX2 = (point2.Item1 % numCols) * (mapWidth / numCols) + (marker.WidthRequest / 2);
+                                double lineY2 = (point2.Item1 / numCols) * (mapHeight / numRows) + (marker.HeightRequest / 2);
+
+                                // Create a Lineshape
+                                Line line = new Line
                                 {
-                                    isCategoryPoint = true;
-                                    break;
-                                }
-                                break;
-                            case "Nonfood":
-                                if (x == 46)
-                                {
-                                    isCategoryPoint = true;
-                                    break;
-                                }
-                                break;
-                            case "Meat":
-                                if (x == 24)
-                                {
-                                    isCategoryPoint = true;
-                                    break;
-                                }
-                                break;
-                            default:
-                                // Handle unknown categories
-                                break;
+                                    X1 = lineX1,
+                                    Y1 = lineY1,
+                                    X2 = lineX2,
+                                    Y2 = lineY2,
+                                    Stroke = lineColor,
+                                    StrokeThickness = lineThickness
+                                };
+
+                                // Add the line to the points layout
+                                pointsLayout.Children.Add(line); // Add the line to the layout
+                            }
                         }
                     }
-
-                    // Create a circular marker using the Ellipse shape
-                    Ellipse marker;
-                    if (isCategoryPoint)
-                    {
-                        marker = new Ellipse
-                        {
-                            WidthRequest = categoryMarkerSize,
-                            HeightRequest = categoryMarkerSize,
-                            Stroke = categoryMarkerColor,
-                            StrokeThickness = 2,
-                            Fill = categoryMarkerColor,
-                            IsVisible = true // Ensure the marker is visible
-                        };
-                    }
-                    else
-                    {
-                        marker = new Ellipse
-                        {
-                            WidthRequest = nonCategoryMarkerSize,
-                            HeightRequest = nonCategoryMarkerSize,
-                            Stroke = nonCategoryMarkerColor,
-                            StrokeThickness = 2,
-                            Fill = nonCategoryMarkerColor,
-                            IsVisible = false // Ensure the marker is visible
-                        };
-                    }
-
-                    // Calculate the position of the marker on the map image
-                    double markerX = (x % numCols) * (mapWidth / numCols) + (marker.WidthRequest / 2);
-                    double markerY = (x / numCols) * (mapHeight / numRows) + (marker.HeightRequest / 2);
-
-                    // Create a Rectangle with the desired bounds
-                    Xamarin.Forms.Rectangle bounds = new Xamarin.Forms.Rectangle(markerX, markerY, marker.WidthRequest, marker.HeightRequest);
-
-                    // Add the marker to the points layout
-                    AbsoluteLayout.SetLayoutBounds(marker, bounds);
-                    pointsLayout.Children.Add(marker);
-                }
-
-                // Add lines between the points on the map image
-                for (int i = 0; i < points.Count - 1; i++)
-                {
-                    var point1 = points[i];
-                    var point2 = points[i + 1];
-
-                    // Calculate the position of the points on the map image
-                    double x1 = (point1.Item1 % numCols) * (mapWidth / numCols) + (lineThickness / 2);
-                    double y1 = (point1.Item1 / numCols) * (mapHeight / numRows) + (lineThickness / 2);
-                    double x2 = (point2.Item1 % numCols) * (mapWidth / numCols) + (lineThickness / 2);
-                    double y2 = (point2.Item1 / numCols) * (mapHeight / numRows) + (lineThickness / 2);
-
-                    // Create a Line shape to draw the line between the points
-                    Line line = new Line
-                    {
-                        X1 = x1,
-                        Y1 = y1,
-                        X2 = x2,
-                        Y2 = y2,
-                        Stroke = lineColor,
-                        StrokeThickness = lineThickness
-                    };
-
-                    // Add the line to the points layout
-                    pointsLayout.Children.Add(line);
-                }
+                };
             }
-        };
-    }
-}
+        }
 
         private void CategorizeItems()
         {
@@ -242,6 +336,12 @@ namespace MarketMapTeam6.Views
                     // Handle unknown categories
                     Console.WriteLine($"Unknown category: {item.Item_Description}");
                 }
+            }
+            // Keep track of the selected items for each category
+            SelectedCategorizedItems = new Dictionary<string, List<Items>>();
+            foreach (var category in CategorizedItems.Keys)
+            {
+                SelectedCategorizedItems[category] = CategorizedItems[category].Where(i => i.IsSelected).ToList();
             }
         }
         private void CreateCheckBoxes()
@@ -415,39 +515,42 @@ namespace MarketMapTeam6.Views
 
             return obstaclePoints;
         }
-        public List<Tuple<int, int>> GetCategoryPoints(Dictionary<string, List<Items>> categorizedItems)
+        public List<Tuple<int, int>> GetCategoryPoints(Dictionary<string, List<Items>> categorizedItems, Dictionary<string, List<Items>> selectedCategorizedItems)
         {
             var categoryPoints = new List<int>();
             var nonObstaclePoints = new List<int>();
 
             foreach (var category in categorizedItems.Keys)
             {
-                switch (category)
+                if (selectedCategorizedItems.ContainsKey(category) && selectedCategorizedItems[category].Count > 0)
                 {
-                    case "Dairy":
-                        categoryPoints.Add(26);
-                        break;
-                    case "Produce":
-                        categoryPoints.Add(51);
-                        break;
-                    case "Frozen":
-                        categoryPoints.Add(29);
-                        break;
-                    case "Baked":
-                        categoryPoints.Add(59);
-                        break;
-                    case "Pantry":
-                        categoryPoints.Add(43);
-                        break;
-                    case "Nonfood":
-                        categoryPoints.Add(46);
-                        break;
-                    case "Meat":
-                        categoryPoints.Add(24);
-                        break;
-                    default:
-                        // Handle unknown categories
-                        break;
+                    switch (category)
+                    {
+                        case "Dairy":
+                            categoryPoints.Add(26);
+                            break;
+                        case "Produce":
+                            categoryPoints.Add(51);
+                            break;
+                        case "Frozen":
+                            categoryPoints.Add(29);
+                            break;
+                        case "Baked":
+                            categoryPoints.Add(59);
+                            break;
+                        case "Pantry":
+                            categoryPoints.Add(43);
+                            break;
+                        case "Nonfood":
+                            categoryPoints.Add(46);
+                            break;
+                        case "Meat":
+                            categoryPoints.Add(24);
+                            break;
+                        default:
+                            // Handle unknown categories
+                            break;
+                    }
                 }
             }
 
